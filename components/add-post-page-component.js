@@ -1,5 +1,4 @@
-import { uploadImage } from "../api.js";
-import { goToPage } from "../index.js";
+
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
