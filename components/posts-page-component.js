@@ -21,11 +21,11 @@ export function renderPostsPageComponent({ appEl }) {
   
   if (posts) {
     const postHtml = posts.map((post, index) => {
-      let lll = 0;
+      let textLikes = 0;
       if (post.likes.length) {
-        lll = post.likes[Object.keys(post.likes)[0]].name;
+        textLikes = post.likes[Object.keys(post.likes)[0]].name;
         if (post.likes.length > 1) {
-          lll = lll + ' и еще ' + post.likes.length;
+          textLikes = textLikes + ' и еще ' + post.likes.length;
         }
       };
       return `<li class="post">
@@ -42,7 +42,7 @@ export function renderPostsPageComponent({ appEl }) {
           <img src="./assets/images/like-${post.isLiked ? '' : 'not-'}active.svg">
         </button>
         <p class="post-likes-text">
-          Нравится: <strong>${lll}</strong>
+          Нравится: <strong>${textLikes}</strong>
         </p>
       </div>
       <p class="post-text">
