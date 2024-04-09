@@ -48,14 +48,19 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       //const fileUploadInputElement = document.getElementById('file-upload-input');
       const inputTextareaElement = document.getElementById('description');
 
-      return onAddPostClick({
-        description: inputTextareaElement.value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;"),
-        imageUrl: imageUrl,
-      });
+      if (inputTextareaElement.value.trim() === "") {
+        alert("Пожалуйста, загрузите картинку и заполните описание.");
+        return;
+      } else {
+        return onAddPostClick({
+          description: inputTextareaElement.value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;"),
+          imageUrl: imageUrl,
+        });
+      }
   });
   
 }

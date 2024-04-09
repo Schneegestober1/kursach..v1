@@ -86,7 +86,7 @@ export const goToPage = (newPage, userId) => {
           console.error(error);
           goToPage(POSTS_PAGE);
         });
-      return renderApp();
+      // return renderApp();
     }
 
     page = newPage;
@@ -143,38 +143,39 @@ const renderApp = () => {
                 Authorization: getToken(),
             },
           }).then((response) => {
-console.log(response);
+            console.log(response);
             if (response.status === 500) {
-
-                return Promise.reject('Сервер сломался, попробуй позже');
-
-            } else if (response.status === 400) {
-
-                return Promise.reject('В теле запроса не передан description, в теле запроса не передан imageUrl или В description - пустая строчка.');
-
-            } else {
-              console.log("Добавляю пост...", { description, imageUrl });
-              return goToPage(POSTS_PAGE);
-          
-              // 
-              // return response.json();
-
-            }
-          }).catch((err) => {
-            throw new Error(err.message)
-          //   if (err.message === 'Сервер сломался, попробуй позже') {
-
-          //     return alert('Сервер сломался, попробуй позже')
-  
-          // } else if (err.message === 'Failed to fetch') {
-  
-          //     return alert('Кажется, у вас сломался интернет, попробуйте позже')
-
-          // } else if (err.message === 'В теле запроса не передан description, в теле запроса не передан imageUrl или В description - пустая строчка.') {
+            throw new Error(500);
+            }  
             
-          //   return alert('В теле запроса не передан description, в теле запроса не передан imageUrl или В description - пустая строчка.')
-          // }
-          })
+            if (response.status === 400) {
+            throw new Error(400);
+            }
+
+            if (response.status === 401) {
+            throw new Error(401);
+            } 
+            
+            goToPage(POSTS_PAGE);
+            
+          }).catch((err) => {
+            console.log(err);
+           if (err.message === '500') {
+            return alert('Сервер сломался, попробуй позже')
+          } 
+          
+          if (err.message === 'Failed to fetch') {
+            return alert('Кажется, у вас сломался интернет, попробуйте позже')
+          } 
+          
+          if (err.message === '400') {
+            return alert('Пожалуйста, загрузите картинку и заполните описание.')
+          } 
+          
+          if (err.message === '401') {
+            return alert('Нет авторизации')
+          }
+          });
         },
     });
   }
