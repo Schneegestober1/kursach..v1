@@ -4,8 +4,9 @@ const personalKey = "rustam-kholov";
 // const personalKey = "prod";
 const baseHost = "https://wedev-api.sky.pro";
 export const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
-import { goToPage, getToken } from "../index.js";
+import { goToPage, getToken, renderApp } from "../index.js";
 import { POSTS_PAGE } from "../routes.js";
+
 
 export function getPosts({ token, userId }) {
   return fetch(postsHost, {
@@ -80,31 +81,26 @@ export function uploadImage({ file }) {
   });
 }
 
-export function addLike(postIdImage) {
-  return fetch(postsHost +'/'+ postIdImage +"/like", {
+export function changeLike(value = true, postIdImage) {
+  const url = postsHost +'/'+ postIdImage + (value ? "/like" : "dislike")
+
+  return fetch(url, {
     method: "POST",
     mode: 'cors',
     headers: {
       Authorization: getToken(),
     },
-  }).then((response) => {
-    console.log(response);
-    goToPage(POSTS_PAGE);
-    return response;
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+
+    const currentPost = Posts[postIdImage]
+    currentPost.isLiked = data.post.isLiked
+
+    
+
+    renderApp()
+    return data;
   });
 }
-
-export function removeLike(postIdImage) {
-  return fetch(postsHost +'/'+ postIdImage +"/dislike", {
-    method: "POST",
-    mode: 'cors',
-    headers: {
-      Authorization: getToken(),
-    },
-  }).then((response) => {
-    console.log(response);
-    goToPage(POSTS_PAGE);
-    return response;
-  });
-}
-

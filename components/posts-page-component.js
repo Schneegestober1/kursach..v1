@@ -1,7 +1,7 @@
 import { POSTS_PAGE, USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { page, posts, goToPage } from "../index.js";
-import { addLike, removeLike } from "../api.js";
+import { changeLike } from "../api.js";
 
 
 
@@ -103,32 +103,25 @@ export function renderPostsPageComponent({ appEl }) {
 
   const addLikeButtonElements = document.querySelectorAll('.like-button');
 
-    if(addLikeButtonElements !== undefined) {
+  if(addLikeButtonElements !== undefined) {
 
-      for (const addLikeButtonElement of addLikeButtonElements) {
+    for (const addLikeButtonElement of addLikeButtonElements) {
 
-        addLikeButtonElement.addEventListener('click', (e) => {
-          const postIdImage = addLikeButtonElement.dataset.postid;
-          const thisElement = e.currentTarget;
-          const imageElement = thisElement.children[0];    
-          
-          if (thisElement.classList.contains('active-like')) {
-            thisElement.classList.remove('active-like')
-            imageElement.setAttribute('src', './assets/images/like-not-active.svg');
-            removeLike(postIdImage)
-          } else {
-            thisElement.classList.add('active-like')
-            imageElement.setAttribute('src', './assets/images/like-active.svg');
-            addLike(postIdImage);
-          }
-        })
+      addLikeButtonElement.addEventListener('click', (e) => {
+        const postIdImage = addLikeButtonElement.dataset.postid
+        const thisElement = e.currentTarget;
+        const imageElement = thisElement.children[0]
+        
+        if (thisElement.classList.contains('active-like')) {
+          thisElement.classList.remove('active-like')
+          imageElement.setAttribute('src', './assets/images/like-not-active.svg')
+          changeLike(false, postIdImage)
+        } else {
+          thisElement.classList.add('active-like')
+          imageElement.setAttribute('src', './assets/images/like-active.svg')
+          changeLike(true, postIdImage)
+        }
+      })
     } 
+  }
 }
-}
-
-
-
-
-
-
-
