@@ -49,7 +49,11 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       const inputTextareaElement = document.getElementById('description');
 
       return onAddPostClick({
-        description: inputTextareaElement.value,
+        description: inputTextareaElement.value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;"),
         imageUrl: imageUrl,
       });
   });

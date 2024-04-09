@@ -25,13 +25,13 @@ export function renderPostsPageComponent({ appEl }) {
       if (post.likes.length) {
         textLikes = post.likes[Object.keys(post.likes)[0]].name;
         if (post.likes.length > 1) {
-          textLikes = textLikes + ' и еще ' + post.likes.length;
+          textLikes = textLikes.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;") + ' и еще ' + post.likes.length;
         }
       };
       return `<li class="post">
       ${(page === POSTS_PAGE) ? (`<div class="post-header">
         <img src="${post.user.imageUrl}" class="post-header__user-image user-link" data-userid="${post.user.id}">
-        <p class="post-header__user-name user-link" data-userid="${post.user.id}">${post.user.name}</p>
+        <p class="post-header__user-name user-link" data-userid="${post.user.id}">${post.user.name.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;")}</p>
       </div>`) : ``}
 
       <div class="post-image-container">
