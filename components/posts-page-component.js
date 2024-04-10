@@ -1,7 +1,7 @@
 import { POSTS_PAGE, USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { page, posts, goToPage } from "../index.js";
-import { changeLike } from "../api.js";
+import { page, posts, goToPage, renderApp, user } from "../index.js";
+import { addLike, removeLike } from "../api.js";
 
 
 
@@ -103,25 +103,29 @@ export function renderPostsPageComponent({ appEl }) {
 
   const addLikeButtonElements = document.querySelectorAll('.like-button');
 
-  if(addLikeButtonElements !== undefined) {
+  for (const addLikeButtonElement of addLikeButtonElements) {
 
-    for (const addLikeButtonElement of addLikeButtonElements) {
+    addLikeButtonElement.addEventListener('click', (e) => {
+      const postIdImage = addLikeButtonElement.dataset.postid
+      const index = addLikeButtonElement.dataset.index
 
-      addLikeButtonElement.addEventListener('click', (e) => {
-        const postIdImage = addLikeButtonElement.dataset.postid
-        const thisElement = e.currentTarget;
-        const imageElement = thisElement.children[0]
-        
-        if (thisElement.classList.contains('active-like')) {
-          thisElement.classList.remove('active-like')
-          imageElement.setAttribute('src', './assets/images/like-not-active.svg')
-          changeLike(false, postIdImage)
+      if (user) {
+        if(posts[index].isLiked) {
+          removeLike(postIdImage).then((updatedPost) => {
+            posts[index].isLiked = false;
+            posts[index].likes = updatedPost.post.likes;
+            renderApp();
+          })
         } else {
-          thisElement.classList.add('active-like')
-          imageElement.setAttribute('src', './assets/images/like-active.svg')
-          changeLike(true, postIdImage)
+          addLike(postIdImage).then((updatedPost) => {
+            posts[index].isLiked = true;
+            posts[index].likes = updatedPost.post.likes;
+            renderApp();
+          })
         }
-      })
-    } 
-  }
+      } else {
+        alert("Необходимо авторизоваться");
+      }
+    })
+  } 
 }

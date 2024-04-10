@@ -81,26 +81,52 @@ export function uploadImage({ file }) {
   });
 }
 
-export function changeLike(value = true, postIdImage) {
-  const url = postsHost +'/'+ postIdImage + (value ? "/like" : "dislike")
+// export function changeLike(value = true, postIdImage) {
+//   const url = postsHost +'/'+ postIdImage + (value ? "/like" : "dislike")
 
-  return fetch(url, {
-    method: "POST",
+//   return fetch(url, {
+//     method: "POST",
+//     mode: 'cors',
+//     headers: {
+//       Authorization: getToken(),
+//     },
+//   })
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log(data);
+
+//     const currentPost = Posts[postIdImage]
+//     currentPost.isLiked = data.post.isLiked
+
+    
+
+//     renderApp()
+//     return data;
+//   });
+// }
+
+export function addLike(postIdImage) {
+  return fetch(postsHost + '/' + postIdImage + '/like', {
+    method: 'POST',
     mode: 'cors',
     headers: {
       Authorization: getToken(),
     },
   })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
+  .then((response) => {
+    return response.json();
+  });
+}
 
-    const currentPost = Posts[postIdImage]
-    currentPost.isLiked = data.post.isLiked
-
-    
-
-    renderApp()
-    return data;
+export function removeLike(postIdImage) {
+  return fetch(postsHost + '/' + postIdImage + '/dislike', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+  .then((response) => {
+    return response.json();
   });
 }
