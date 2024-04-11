@@ -3,22 +3,8 @@ import { renderHeaderComponent } from "./header-component.js";
 import { page, posts, goToPage, renderApp, user } from "../index.js";
 import { addLike, removeLike } from "../api.js";
 
-
-
 export function renderPostsPageComponent({ appEl }) {
-  // TODO: реализовать рендер постов из api
-  console.log("Актуальный список постов:", posts);
 
-  /**
-   * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
-   * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
-   * 
-   * дописать функцию чтобы вторым параметром можно было передать id юзера который ты получаешь
-   * 
-   */
-  // const appElement = document.getElementById('app');
-  /**пишем условие проверки если post.user.id совпадает с нашим переданным dataUserId, то выводим посты, если не совпадает, то не выводим, НО если в dataUserID лежим значение all, то выводим все посты */
-  
   if (posts) {
     const postHtml = posts.map((post, index) => {
       let textLikes = 0;
@@ -55,10 +41,6 @@ export function renderPostsPageComponent({ appEl }) {
     </li>`
     }).join('');
 
-
-    
-
-  
     const appHtml = `
       <div class="page-container">
         <div class="header-container"></div>

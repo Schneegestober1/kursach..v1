@@ -1,11 +1,10 @@
-// Замени на свой, чтобы получить независимый от других набор данных.
-// "боевая" версия инстапро лежит в ключе prod
 const personalKey = "rustam-kholov";
-// const personalKey = "prod";
 const baseHost = "https://wedev-api.sky.pro";
+
 export const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
-import { goToPage, getToken, renderApp } from "../index.js";
-import { POSTS_PAGE } from "../routes.js";
+
+import { getToken} from "../index.js";
+
 
 
 export function getPosts({ token, userId }) {
@@ -33,7 +32,6 @@ export function getPosts({ token, userId }) {
     });
 }
 
-// https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
 export function registerUser({ login, password, name, imageUrl }) {
   return fetch(baseHost + "/api/user", {
     method: "POST",
@@ -80,30 +78,6 @@ export function uploadImage({ file }) {
     return data.fileUrl;
   });
 }
-
-// export function changeLike(value = true, postIdImage) {
-//   const url = postsHost +'/'+ postIdImage + (value ? "/like" : "dislike")
-
-//   return fetch(url, {
-//     method: "POST",
-//     mode: 'cors',
-//     headers: {
-//       Authorization: getToken(),
-//     },
-//   })
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log(data);
-
-//     const currentPost = Posts[postIdImage]
-//     currentPost.isLiked = data.post.isLiked
-
-    
-
-//     renderApp()
-//     return data;
-//   });
-// }
 
 export function addLike(postIdImage) {
   return fetch(postsHost + '/' + postIdImage + '/like', {

@@ -20,7 +20,6 @@ export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
 
-// import { postsHost } from "./api.js";
 const host = `${postsHost}/`;
 
 export const getToken = () => {
@@ -34,9 +33,6 @@ export const logout = () => {
   goToPage(POSTS_PAGE);
 };
 
-/**
- * Включает страницу приложения
- */
 export const goToPage = (newPage, userId) => {
 
   if (
@@ -49,7 +45,6 @@ export const goToPage = (newPage, userId) => {
     ].includes(newPage)
   ) {
     if (newPage === ADD_POSTS_PAGE) {
-      // Если пользователь не авторизован, то отправляем его на авторизацию перед добавлением поста
       page = user ? ADD_POSTS_PAGE : AUTH_PAGE;
       return renderApp();
     }
@@ -69,12 +64,9 @@ export const goToPage = (newPage, userId) => {
           goToPage(POSTS_PAGE);
         });
     }
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     if (newPage === USER_POSTS_PAGE) {
 
-      // TODO: реализовать получение постов юзера из API
-      // posts = fetch
-      // console.log("Открываю страницу пользователя: ", data.userId);
       page = USER_POSTS_PAGE;
       return getPosts({ token: getToken(), userId })
         .then((newPosts) => {
@@ -86,7 +78,6 @@ export const goToPage = (newPage, userId) => {
           console.error(error);
           goToPage(POSTS_PAGE);
         });
-      // return renderApp();
     }
 
     page = newPage;
@@ -125,7 +116,6 @@ export const renderApp = () => {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-        // TODO: реализовать добавление поста в API
         return fetch(
           host, 
           {
@@ -187,10 +177,6 @@ export const renderApp = () => {
   }
 
   if (page === USER_POSTS_PAGE) {
-    // // TODO: реализовать страницу фотографию пользвателя
-    // // Рендер постов пользователя 
-    // appEl.innerHTML = "Здесь будет страница фотографий пользователя";
-    // return;
     return renderPostsPageComponent({
       appEl
     });
