@@ -3,7 +3,7 @@ const baseHost = "https://wedev-api.sky.pro";
 
 export const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
-import { getToken} from "../index.js";
+import { getToken} from "./index.js";
 
 
 
