@@ -4,7 +4,7 @@ import { ADD_POSTS_PAGE, AUTH_PAGE, POSTS_PAGE } from "../routes.js";
 export function renderHeaderComponent({ element }) {
   element.innerHTML = `
   <div class="page-header">
-      <h1 class="logo">instapro</h1>
+      <h1 class="logo">rustagram</h1>
       <button class="header-button add-or-login-button">
       ${
         user
